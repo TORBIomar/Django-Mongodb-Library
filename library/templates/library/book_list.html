@@ -9,6 +9,18 @@
             box-sizing: border-box;
         }
 
+        .book-link {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.15s ease, transform 0.08s ease;
+        }
+
+        .book-link:hover {
+            color: #667eea;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -207,7 +219,9 @@
 <body>
     <div class="container">
         <header>
-            <h1>📚 Library</h1>
+            <a href="{% url 'book_list' %}" style="text-decoration: none; color: inherit;">
+                <h1>📚 Library</h1>
+            </a>
             <p class="subtitle">Discover your next great read</p>
         </header>
 
@@ -233,7 +247,7 @@
             </tr>
             {% for book in page_obj %}
             <tr>
-                <td><strong>{{ book.title }}</strong></td>
+                <td><strong><a href="{% url 'book_detail' book.id %}" class="book-link">{{ book.title }}</a></strong></td>
                 <td>{{ book.authors }}</td>
                 <td>{{ book.year }}</td>
                 <td>{{ book.publisher }}</td>

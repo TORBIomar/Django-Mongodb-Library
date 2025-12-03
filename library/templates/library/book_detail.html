@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ book.title|default:'Book' }}</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #222; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        .back { margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: 260px 1fr; gap: 20px; align-items: start; }
+        img { width: 100%; border-radius: 8px; box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+        h1 { margin-bottom: 6px; }
+        .meta { color: #555; margin-bottom: 14px; }
+        .rating { display: inline-block; padding: 8px 12px; background: #f4f6fb; border-radius: 10px; font-weight: 600; }
+        .no-image { width: 260px; height: 360px; display:flex; align-items:center; justify-content:center; background:#f0f0f0; border-radius:8px; color:#888; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back"><a href="{% url 'book_list' %}" style="text-decoration:none;color:#667eea">← Back to library</a></div>
+
+        {% if error %}
+            <p>{{ error }}</p>
+        {% else %}
+        <div class="grid">
+            <div>
+                {% if book.image_large %}
+                    <img src="{{ book.image_large }}" alt="{{ book.title }}">
+                {% elif book.image_medium %}
+                    <img src="{{ book.image_medium }}" alt="{{ book.title }}">
+                {% elif book.image_small %}
+                    <img src="{{ book.image_small }}" alt="{{ book.title }}">
+                {% else %}
+                    <div class="no-image">No image</div>
+                {% endif %}
+            </div>
+            <div>
+                <h1>{{ book.title }}</h1>
+                <div class="meta">By {{ book.authors }} {% if book.year %}• {{ book.year }}{% endif %} {% if book.publisher %}• {{ book.publisher }}{% endif %}</div>
+
+                <div>
+                    <span class="rating">Global rating: {% if rating %}{{ rating }}{% else %}N/A{% endif %}</span>
+                </div>
+
+                {% if book.isbn %}
+                    <p style="margin-top:18px;color:#666">ISBN: {{ book.isbn }}</p>
+                {% endif %}
+
+                <!-- You can add more metadata here -->
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
